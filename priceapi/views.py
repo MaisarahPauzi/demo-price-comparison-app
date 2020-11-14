@@ -8,6 +8,7 @@ from drf_yasg.utils import swagger_auto_schema
 import requests
 from bs4 import BeautifulSoup
 import json
+from pricedb.models import SearchHistory, RealEstateProperty
 
 class ApiEndpoint(APIView):
     @swagger_auto_schema(
@@ -39,8 +40,19 @@ class ApiEndpoint(APIView):
 
         items = []
 
+        # save in DB
+        s = SearchHistory.objects.create(title=search_query)
+        
         for item_list in items_lists:
             items.append({'name':item_list['item']['name'], 'link':item_list['item']['url'], 'image':item_list['item']['image'], 'price':item_list['item']['offers']['price']})
+            r = RealEstateProperty.objects.create(
+                name = item_list['item']['name'],
+                link = item_list['item']['url'],
+                image = item_list['item']['image'],
+                price = item_list['item']['offers']['price'],
+                history = s
+            )
+
 
         context_data = {
             'Source': 'Mudah.my',
