@@ -21,7 +21,7 @@ class ApiEndpoint(APIView):
     )
     def post(self, request, format=None):
         location = request.data.get('location')
-        BASE_URL = "https://www.mudah.my/penang/properties-for-sale-2000?q="
+        BASE_URL = "https://www.mudah.my/malaysia/properties-for-sale-2000?q="
         search_query = location
         URL = BASE_URL + search_query
 
