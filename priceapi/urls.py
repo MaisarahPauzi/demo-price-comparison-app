@@ -10,7 +10,7 @@ schema_view = get_schema_view(
    openapi.Info(
       title="API Endpoint",
       default_version='v1',
-      description="This is a web scraping project. You can search for any product in Malaysia's famous ecommerce website and we will grab their prices for you!",
+      description="This is a web scraping project. You can search for real estate property in Malaysia. Just enter any location/area that you preferred and we will render the list for you!",
       terms_of_service="https://www.google.com/policies/terms/",
       contact=openapi.Contact(email="contact@snippets.local"),
       license=openapi.License(name="BSD License"),

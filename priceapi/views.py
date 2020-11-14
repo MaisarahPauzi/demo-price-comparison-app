@@ -11,18 +11,18 @@ import json
 
 class ApiEndpoint(APIView):
     @swagger_auto_schema(
-        operation_description="Search product", 
-        responses={201: 'New Product Scrapped'}, 
+        operation_description="Search location", 
+        responses={201: 'New Properties Scrapped'}, 
         request_body=openapi.Schema(
         type=openapi.TYPE_OBJECT, 
         properties={
-            'product': openapi.Schema(type=openapi.TYPE_STRING, description='Product Name'),
+            'location': openapi.Schema(type=openapi.TYPE_STRING, description='Location/Area'),
         })
     )
     def post(self, request, format=None):
-        product = request.data.get('product')
+        location = request.data.get('location')
         BASE_URL = "https://www.mudah.my/penang/properties-for-sale-2000?q="
-        search_query = product
+        search_query = location
         URL = BASE_URL + search_query
 
         page = requests.get(URL)
