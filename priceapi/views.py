@@ -11,9 +11,10 @@ import json
 from pricedb.models import SearchHistory, RealEstateProperty
 import pandas as pd
 from django.http import HttpResponse
+from django.db.models import F
 
 def download_data(request):
-    qs = RealEstateProperty.objects.all().values('name', 'link', 'image', 'price')
+    qs = RealEstateProperty.objects.all().select_related('history').annotate(search_keyword=F('history__title')).values('name', 'link', 'image', 'price', 'search_keyword')
     data_list = list(qs)
     results = pd.DataFrame(data_list)
     response = HttpResponse(content_type='text/csv')
