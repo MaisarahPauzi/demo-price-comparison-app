@@ -9,6 +9,19 @@ import requests
 from bs4 import BeautifulSoup
 import json
 from pricedb.models import SearchHistory, RealEstateProperty
+import pandas as pd
+from django.http import HttpResponse
+
+def download_data(request):
+    qs = RealEstateProperty.objects.all().values('name', 'link', 'image', 'price')
+    data_list = list(qs)
+    results = pd.DataFrame(data_list)
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=all_data.csv'
+
+    results.to_csv(path_or_buf=response)
+    return response
+
 
 class ApiEndpoint(APIView):
     @swagger_auto_schema(

@@ -18,7 +18,7 @@ class RealEstateProperty(models.Model):
     link = models.CharField(max_length=255)
     image = models.CharField(max_length=255)
     price = models.IntegerField()
-    history = models.ForeignKey(SearchHistory, on_delete=models.CASCADE)
+    history = models.ForeignKey(SearchHistory, on_delete=models.CASCADE, related_name='properties')
 
     class Meta:
         verbose_name_plural = 'Real Estate Properties'
