@@ -23,6 +23,12 @@ def download_data(request):
     results.to_csv(path_or_buf=response)
     return response
 
+def parse_javascript_str(jstr):
+    formatted_js = jstr.replace('<script type="application/ld+json">','')
+    formatted_js = formatted_js.replace('</script>','')
+    json_js=json.loads(formatted_js)
+    return json_js[2]['itemListElement']
+
 
 class ApiEndpoint(APIView):
     @swagger_auto_schema(
@@ -46,11 +52,7 @@ class ApiEndpoint(APIView):
 
         js = soup.find('script', {"type":"application/ld+json"})
         jstr= str(js)
-        formatted_js = jstr.replace('<script type="application/ld+json">','')
-        formatted_js = formatted_js.replace('</script>','')
-        json_js=json.loads(formatted_js)
-
-        items_lists = json_js[2]['itemListElement']
+        items_lists = parse_javascript_str(jstr)
 
         items = []
 
